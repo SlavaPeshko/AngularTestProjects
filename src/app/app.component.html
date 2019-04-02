@@ -1,5 +1,11 @@
-<h1>{{ title }}</h1>
-<app-test></app-test>
+<h1>{{title}}</h1>
+<nav>
+    <a routerLink="/superheroes" routerLinkActive="active">Tour of Heroes</a>
+    <a routerLink="/validation-form" routerLinkActive="active">Validation form</a>
+</nav>
+<router-outlet></router-outlet>
+<!-- <app-user></app-user> -->
+<!-- <app-test></app-test> -->
 <!-- <nav>
     <a routerLink="/dashboard">Dashboard</a>
     <a routerLink="/heroes">Heroes</a>

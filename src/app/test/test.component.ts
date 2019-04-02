@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, AbstractControl, Validators, ValidatorFn } from "@angular/forms";
-import { Subscription } from 'rxjs';
+import { Subscription, from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-test',
@@ -13,6 +13,7 @@ export class TestComponent implements OnInit {
   userTypes: string[];
   userForm: FormGroup;
   private userTypeSubscription: Subscription;
+  data: Observable<any> = from(fetch('https://jsonplaceholder.typicode.com/users'));
 
   constructor(private fb: FormBuilder) { }
 
@@ -20,6 +21,11 @@ export class TestComponent implements OnInit {
     this.initForm();
     this.userTypes = ['admin', 'user'];
     this.subscribeToUserType();
+    this.data.subscribe({
+      next(response) { console.log(response); },
+      error(error) { console.log('Error', error); },
+      complete() { console.log('Complete'); }
+    });
   }
 
   ngOnDestroy(): void {
