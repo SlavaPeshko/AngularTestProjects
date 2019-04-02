@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, filter, map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -26,6 +26,13 @@ export class HeroListComponent implements OnInit {
         this.selectedId = +params.get('id');
         return this.service.getHeroes();
       })
+    );
+  }
+
+  delete(hero: Hero): void {
+    this.heroes$.subscribe(value => console.log(value));
+    this.heroes$ = this.heroes$.pipe(
+      map(heroes => heroes.filter(x => x.id != hero.id))
     );
   }
 }
