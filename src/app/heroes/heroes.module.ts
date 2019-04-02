@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
+
 import { HeroListComponent } from './hero-list/hero-list.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
@@ -14,7 +17,10 @@ import { HeroesComponent } from './heroes/heroes.component';
   imports: [
     CommonModule,
     FormsModule,
-    HeroesRoutingModule
+    HeroesRoutingModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   declarations: [
     HeroListComponent,

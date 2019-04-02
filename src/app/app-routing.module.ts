@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ValidationFormComponent } from './validation-form/validation-form.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/superheroes', pathMatch: 'full' },
+  { path: '', redirectTo: '/heroes', pathMatch: 'full' },
   { path: 'validation-form', component: ValidationFormComponent },
 ];
 
