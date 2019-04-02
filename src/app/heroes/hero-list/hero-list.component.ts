@@ -1,38 +1,43 @@
-import { Observable } from 'rxjs';
-import { switchMap, filter, map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 import { HeroService } from '../hero.service';
 import { Hero } from '../hero';
 
+import { ActivatedRoute } from "@angular/router";
+
 @Component({
-  selector: 'app-hero-list',
-  templateUrl: './hero-list.component.html',
-  styleUrls: ['./hero-list.component.css']
+  selector: "app-hero-list",
+  templateUrl: "./hero-list.component.html",
+  styleUrls: ["./hero-list.component.css"]
 })
 export class HeroListComponent implements OnInit {
-  heroes$: Observable<Hero[]>;
+  heroes: Hero[];
   selectedId: number;
 
   constructor(
-    private service: HeroService,
-    private route: ActivatedRoute
-  ) { }
-
-  ngOnInit() {
-    this.heroes$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        this.selectedId = +params.get('id');
-        return this.service.getHeroes();
-      })
-    );
+    private heroService: HeroService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.params.subscribe(params => {
+      this.selectedId = params["id"] != undefined ? +params["id"] : -1;
+    });
   }
 
-  delete(hero: Hero): void {
-    this.heroes$.subscribe(value => console.log(value));
-    this.heroes$ = this.heroes$.pipe(
-      map(heroes => heroes.filter(x => x.id != hero.id))
-    );
+  ngOnInit() {
+    this.getHeroes();
+  }
+
+  getHeroes(): void {
+    this.heroService.getHeroes().subscribe(heroes => (this.heroes = heroes));
+  }
+
+  delete(id: number): void {
+    this.heroes = this.heroes.filter(h => h.id != id);
+    this.heroService.deleteHero(id).subscribe();
+  }
+
+  isSelected(hero: Hero): boolean {
+    const select = hero.id === this.selectedId;
+    return select;
   }
 }

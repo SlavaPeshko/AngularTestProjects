@@ -13,20 +13,21 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class HeroService {
   private heroesUrl = 'api/heroes';
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService
+  ) {}
 
   getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
-    return this.http.get<Hero[]>(this.heroesUrl).pipe(
-      catchError(this.handleError<Hero[]>('getHeroes', []))
-    );
+    return this.http
+      .get<Hero[]>(this.heroesUrl)
+      .pipe(catchError(this.handleError<Hero[]>('getHeroes', [])));
     // return of(HEROES);
   }
 
@@ -44,7 +45,7 @@ export class HeroService {
     }
 
     return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-      tap(_ => this.log(`found heroes matching "${term}"`)),
+      tap(_ => this.log(`found heroes matching '${term}'`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );
   }
@@ -61,6 +62,14 @@ export class HeroService {
       tap(_ => this.log(`updated entity`)),
       catchError(this.handleError<T>('update', entity))
     );
+  }
+
+  deleteHero(id: number): Observable<{}> {
+    // debugger;
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http
+      .delete(url, httpOptions)
+      .pipe(catchError(this.handleError('deleteHero')));
   }
 
   private log(message: string) {
