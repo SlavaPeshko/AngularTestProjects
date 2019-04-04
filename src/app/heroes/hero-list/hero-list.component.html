@@ -1,5 +1,13 @@
 <app-heroes></app-heroes>
 <h2>HEROES</h2>
+<div>
+  <label>Hero name:
+    <input #heroName>
+  </label>
+  <button (click)="add(heroName.value)">
+    add
+  </button>
+</div>
 <ul class="heroes">
   <li *ngFor="let hero of heroes" [class.selected]="isSelected(hero)">
     <a [routerLink]="['/hero', hero.id]">

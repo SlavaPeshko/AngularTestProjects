@@ -16,6 +16,7 @@ import { ValidationFormComponent } from './validation-form/validation-form.compo
 
 import { MaterialModule } from "./material/material.module";
 import { HeroesModule } from './heroes/heroes.module';
+import { MessagesComponent } from './messages/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HeroesModule } from './heroes/heroes.module';
     TestComponent,
     UserComponent,
     ValidationFormComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
